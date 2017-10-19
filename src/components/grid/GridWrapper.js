@@ -1,4 +1,3 @@
-/* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 
@@ -12,7 +11,7 @@ export default class GridWrapper extends Component {
 
   render() {
     return (
-      <div style={{ height: 410, width: 800 }} className="ag-fresh">
+      <div style={{ height: 800, width: '100%' }} className="ag-fresh">
         <AgGridReact
           columnDefs={this.props.columnDefs}
           rowData={this.props.rowData}

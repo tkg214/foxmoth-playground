@@ -3,25 +3,25 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 
-import store from './store';
-import Root from './config/Root';
+import { store, history } from './store';
+import App from './components/App';
 
-const render = (Component, reduxStore) => {
+const render = (Component, reduxStore, reduxHistory) => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={reduxStore}>
-        <Component />
+        <Component history={reduxHistory} />
       </Provider>
     </AppContainer>,
     document.getElementById('root'),
   );
 };
 
-render(Root, store);
+render(App, store, history);
 
 if (module.hot) {
-  module.hot.accept('./config/Root', () => {
-    const newApp = require('./config/Root').default;
+  module.hot.accept('./components/App', () => {
+    const newApp = require('./components/App').default;
     render(newApp);
   });
 }

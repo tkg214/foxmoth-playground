@@ -1,38 +1,22 @@
-import React, { Component } from 'react';
-import GridWrapper from './grid/GridWrapper';
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import Home from '../sections/home/components/Home';
+import ReduxGrid from '../sections/reduxGrid/containers/Main';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      columnDefs: [
-        { headerName: 'Make', field: 'make' },
-        { headerName: 'Model', field: 'model' },
-        { headerName: 'Price', field: 'price' },
-      ],
-      rowData: [
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-      ],
-    };
-    this.onGridReady = this.onGridReady.bind(this);
-  }
-
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.columnApi = params.api;
-    this.gridApi.sizeColumnsToFit();
-  }
-
-  render() {
-    return (
-      <GridWrapper
-        columnDefs={this.state.columnDefs}
-        rowData={this.state.rowData}
-        onGridReady={this.onGridReady}
-      />
-    );
-  }
-}
+const App = (props) => {
+  return (
+    <ConnectedRouter history={props.history}>
+      <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/redux">Redux</Link></li>
+        </ul>
+        <Route exact path="/" component={Home} />
+        <Route path="/redux" component={ReduxGrid} />
+      </div>
+    </ConnectedRouter>
+  );
+};
 
 export default App;

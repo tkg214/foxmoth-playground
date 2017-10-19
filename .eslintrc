@@ -17,9 +17,12 @@
     "space-before-function-paren": "off",
     "react/prefer-stateless-function": "warn",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-curly-brace-presence": [0, "ignore"],
+    "react/prop-types": "off",
+    "jsx-a11y/anchor-is-valid": [0],
     "linebreak-style": "off",
     "global-require": "off",
     "semi": "warn",
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
   }
 }
