@@ -33,6 +33,7 @@ const fetchMarketDataFailedAction = (payload) => {
   };
 };
 
+// TODO merge openClose dataset
 const mergeData = (data) => {
   return _.map(data[1], (obj) => {
     const key = obj.symbol;

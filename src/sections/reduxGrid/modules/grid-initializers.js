@@ -3,13 +3,13 @@ import _ from 'lodash';
 export const createColumnDefs = () => {
   return [
     { headerName: 'Symbol', field: 'symbol' },
-    { headerName: 'Open', field: 'open' },
-    { headerName: 'Close', field: 'close' },
-    { headerName: 'High', field: 'high' },
-    { headerName: 'Low', field: 'low' },
-    { headerName: 'Change', field: 'change' },
-    { headerName: '% Change', field: 'percentChange' },
-    { headerName: 'Volume', field: 'volume' },
+    { headerName: 'Open', field: 'open', editable: true },
+    { headerName: 'Close', field: 'close', editable: true },
+    { headerName: 'High', field: 'high', editable: true },
+    { headerName: 'Low', field: 'low', editable: true },
+    { headerName: 'Change', field: 'change', editable: true },
+    { headerName: '% Change', field: 'percentChange', editable: true },
+    { headerName: 'Volume', field: 'volume', editable: true },
   ];
 };
 

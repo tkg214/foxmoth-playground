@@ -51,6 +51,10 @@ acorn@^5.0.0, acorn@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.1.1.tgz#53fe161111f912ab999ee887a90a0bc52822fd75"
 
+ag-grid-enterprise@^13.3.1:
+  version "13.3.1"
+  resolved "https://registry.yarnpkg.com/ag-grid-enterprise/-/ag-grid-enterprise-13.3.1.tgz#1b9e7f8043639c468fc8d1137bc69d15e6027468"
+
 ag-grid-react@^13.3.0:
   version "13.3.0"
   resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-13.3.0.tgz#66a242b5cbd7b73ff9f1b445eb397f1af44b212e"
