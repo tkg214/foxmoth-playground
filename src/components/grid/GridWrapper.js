@@ -1,14 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 
-export default class GridWrapper extends Component {
-  static defaultProps = {
-    options: {
-      rowSelection: 'multiple',
-      rowHeight: 20,
-    },
-  };
-
+export default class GridWrapper extends PureComponent {
   render() {
     return (
       <div style={{ height: 800, width: '100%' }} className="ag-fresh">
@@ -16,7 +9,7 @@ export default class GridWrapper extends Component {
           columnDefs={this.props.columnDefs}
           rowData={this.props.rowData}
           onGridReady={this.props.onGridReady}
-          {...this.props.options}
+          gridOptions={this.props.gridOptions}
         />
       </div>
     );

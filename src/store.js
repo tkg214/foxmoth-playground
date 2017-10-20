@@ -6,6 +6,7 @@ import createHashHistory from 'history/createHashHistory';
 
 import { isProd } from './util';
 
+import { originalGridSagas, originalDataReducer } from './sections/originalGrid/modules';
 import { reduxGridSagas, marketDataReducer } from './sections/reduxGrid/modules';
 
 /* eslint-disable no-underscore-dangle */
@@ -18,6 +19,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(
   combineReducers({
+    originalData: originalDataReducer,
     marketData: marketDataReducer,
     routing: routerReducer,
   }),
@@ -25,3 +27,4 @@ export const store = createStore(
 );
 
 sagaMiddleware.run(...reduxGridSagas);
+sagaMiddleware.run(...originalGridSagas);
