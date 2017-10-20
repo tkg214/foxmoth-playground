@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import GridWrapper from '../../../components/grid/GridWrapper';
+import { createColumnDefs, createRowData } from '../modules/grid-initializers';
 
 class Grid extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columnDefs: [
-        { headerName: 'Make', field: 'make' },
-        { headerName: 'Model', field: 'model' },
-        { headerName: 'Price', field: 'price' },
-      ],
-      rowData: [
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-      ],
+      columnDefs: createColumnDefs(),
+      rowData: createRowData(this.props.stocks),
     };
     this.onGridReady = this.onGridReady.bind(this);
   }

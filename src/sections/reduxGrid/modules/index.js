@@ -41,7 +41,6 @@ const mergeData = (data) => {
       {
         symbol: key,
         previous: obj,
-        current: data[0][key],
       },
     );
   });
@@ -72,17 +71,16 @@ function* reduxGridLocationChangeSagaWatcher() {
 
 const initialState = Immutable({
   stocks: {},
+  ready: false,
 });
 
 export const marketDataReducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.fetchMarketDataSucceeded:
-      return state.set('stocks', action.payload.entities.stocks);
+      return state.set('ready', true).set('stocks', action.payload.entities.stocks);
     default:
       return state;
   }
 };
 
-export const reduxGridSagas = [
-  reduxGridLocationChangeSagaWatcher,
-];
+export const reduxGridSagas = [reduxGridLocationChangeSagaWatcher];
