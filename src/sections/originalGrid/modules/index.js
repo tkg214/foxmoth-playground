@@ -9,8 +9,9 @@ import { swaptionDataCacheReducer } from './cache';
 
 const prefix = 'original-grid';
 
-const constants = {
-  fetchSwaptionDataSucceeded: `${prefix}/FETCH_SWAPTION_DATA_SUCCEEDED`,
+export const constants = {
+  FETCH_SWAPTION_DATA_SUCCEEDED: `${prefix}/FETCH_SWAPTION_DATA_SUCCEEDED`,
+  UPDATE_QUOTE_VALUE: `${prefix}/UPDATE_QUOTE_VALUE`,
 };
 
 // mocks an async call
@@ -24,8 +25,15 @@ const mockFetch = (result) => {
 
 const fetchSwaptionDataSucceeded = (payload) => {
   return {
-    type: constants.fetchSwaptionDataSucceeded,
+    type: constants.FETCH_SWAPTION_DATA_SUCCEEDED,
     payload,
+  };
+};
+
+export const updateQuoteValue = (params) => {
+  return {
+    type: constants.UPDATE_QUOTE_VALUE,
+    payload: params,
   };
 };
 
@@ -47,8 +55,15 @@ const initialState = Immutable({
 
 const swaptionDataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case constants.fetchSwaptionDataSucceeded:
+    case constants.FETCH_SWAPTION_DATA_SUCCEEDED:
       return state.set('ready', true).set('data', action.payload);
+    case constants.UPDATE_QUOTE_VALUE: {
+      const {
+        strikeIndex, rowIndex, columnIndex, newValue,
+      } = action.payload.params;
+      const statePath = ['data', 'volatilities', strikeIndex, rowIndex, columnIndex];
+      return state.setIn(statePath, newValue);
+    }
     default:
       return state;
   }

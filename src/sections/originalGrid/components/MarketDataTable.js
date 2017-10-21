@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import _ from 'lodash';
 import GridWrapper from '../../../components/grid/GridWrapper';
 import { createColumnDefs } from '../modules/grid-initializers';
+import AgGridCellEditor from './AgGridCellEditor';
 
 const AG_GRID_ROW_HEIGHT = 20;
 const AG_GRID_HEADER_HEIGHT = 20;
@@ -19,18 +20,22 @@ export default class MarketDataTable extends PureComponent {
       rowHeight: AG_GRID_ROW_HEIGHT,
       headerHeight: AG_GRID_HEADER_HEIGHT,
     };
-
     this.onGridReady = this.onGridReady.bind(this);
+    this.updateQuoteValue = this.updateQuoteValue.bind(this);
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.api;
-    this.gridApi.sizeColumnsToFit();
   }
 
   getContextMenuItems = () => {
     return ['copy', 'copyWithHeaders', 'export'];
+  }
+
+  columnDefs = () => {
+    const columnDefs = createColumnDefs(this.props.swaptionData, this.valueGetter, this.updateQuoteValue, AgGridCellEditor);
+    return columnDefs;
   }
 
   valueGetter = (key, params) => {
@@ -38,15 +43,14 @@ export default class MarketDataTable extends PureComponent {
   }
 
   updateQuoteValue(extraParams, params) {
-    if (params.newValue.value !== params.newValue.oldValue) {
+    if (params.newValue !== params.oldValue) {
       this.props.updateQuoteValue({
         params: _.assign(
           {},
           {
-            rowIndex: params.newValue.rowIndex,
-            columnIndex: params.newValue.columnIndex,
-            newValue: params.newValue.value,
-            oldValue: params.newValue.oldValue,
+            rowIndex: params.node.rowIndex,
+            newValue: Number(params.newValue),
+            oldValue: params.oldValue,
           },
           extraParams,
         ),
@@ -63,7 +67,7 @@ export default class MarketDataTable extends PureComponent {
       <GridWrapper
         onGridReady={this.onGridReady}
         rowData={this.props.rowData}
-        columnDefs={createColumnDefs(this.props.swaptionData, this.valueGetter, this.updateQuoteValue)}
+        columnDefs={this.columnDefs()}
         gridOptions={this.gridOptions}
       />
     );

@@ -26,13 +26,14 @@ const convertToNumeralPercentage = (rateString, formatMask = '(0,0.00000 %)') =>
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export const createColumnDefs = (swaptionData, valueGetter, updateQuoteValue) => {
+export const createColumnDefs = (swaptionData, valueGetter, updateQuoteValue, AgGridCellEditor) => {
   const columnDefs = [{
     headerName: 'Expiry/Swap',
     field: 'expiry',
     tooltipField: 'expiry',
     headerTooltip: 'Expiry/Swap',
     pinned: 'left',
+    width: 90,
   }];
 
   const mappedSwapLengths = _.map((swaptionData.swap_lengths || []), (length, index) => {
@@ -45,11 +46,12 @@ export const createColumnDefs = (swaptionData, valueGetter, updateQuoteValue) =>
       headerTooltip: length,
       editable: true,
       strikeIndex: 0,
-      // cellEditorFramework: AgGridCellEditor,
-      // cellEditorParams: {
-      //   rowDataLength: this.rowData && this.rowData.length,
-      //   market_data_template: swaptionData.market_data_template,
-      // },
+      width: 90,
+      cellEditorFramework: AgGridCellEditor,
+      cellEditorParams: {
+        rowDataLength: swaptionData.swap_lengths.length,
+        market_data_template: swaptionData.market_data_template,
+      },
       cellRenderer: (params) => {
         return _.isNumber(params.value) ? convertToNumeralPercentage(params.value, '(0,0.00 %)') : params.value;
       },

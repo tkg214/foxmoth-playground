@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { originalDataSelectors } from '../modules';
-import { updateQuoteValue } from '../modules/cache';
+import { originalDataSelectors, updateQuoteValue } from '../modules';
 import MarketDataTable from '../components/MarketDataTable';
 
 const OriginalGrid = (props) => {
