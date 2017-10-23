@@ -18,7 +18,7 @@ const OriginalGrid = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    rowData: originalDataSelectors.agGridFormattedSwaptionData(state),
+    rowData: state.originalData.rowData,
     swaptionData: originalDataSelectors.swaptionData(state),
     dataReady: state.originalData.swaption.ready,
   };

@@ -16,13 +16,14 @@ const formatDataToCustomFields = (rowData, data, pushNewRow = true) => {
       clonedRowData.push({});
     }
     _.forEach(_data, (value, index) => {
-      clonedRowData[dataIndex][`${customFieldKeyword}${index}`] = value;
+      clonedRowData[dataIndex][`${customFieldKeyword}${index}_`] = value;
+      clonedRowData[dataIndex][`${customFieldKeyword}${index}`] = value.value;
     });
   });
   return clonedRowData;
 };
 
-const formatSwaptionForAgGrid = (swaptionData, strikeIndex = 0) => {
+export const formatSwaptionForAgGrid = (swaptionData, strikeIndex = 0) => {
   if (!swaptionData) {
     return null;
   }
@@ -49,7 +50,7 @@ const bindMappingData = (array, rowIndex) => {
   });
 };
 
-const mapVolatilities = (instrumentData) => {
+export const mapVolatilities = (instrumentData) => {
   return _.map(instrumentData.volatilities, (volatilities) => {
     return _.map(volatilities, (volatility, volatilityRowIndex) => {
       return bindMappingData(volatility, volatilityRowIndex);

@@ -26,7 +26,7 @@ const convertToNumeralPercentage = (rateString, formatMask = '(0,0.00000 %)') =>
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export const createColumnDefs = (swaptionData, valueGetter, updateQuoteValue, AgGridCellEditor) => {
+export const createColumnDefs = (swaptionData, valueGetter, updateQuoteValue) => {
   const columnDefs = [{
     headerName: 'Expiry/Swap',
     field: 'expiry',
@@ -40,18 +40,10 @@ export const createColumnDefs = (swaptionData, valueGetter, updateQuoteValue, Ag
     return {
       headerName: length,
       field: `customField${index}`,
-      valueGetter: (params) => {
-        return valueGetter(`customField${index}`, params);
-      },
       headerTooltip: length,
       editable: true,
       strikeIndex: 0,
       width: 90,
-      cellEditorFramework: AgGridCellEditor,
-      cellEditorParams: {
-        rowDataLength: swaptionData.swap_lengths.length,
-        market_data_template: swaptionData.market_data_template,
-      },
       valueFormatter: (params) => {
         return _.isNumber(params.value) ? convertToNumeralPercentage(params.value, '(0,0.00 %)') : params.value;
       },

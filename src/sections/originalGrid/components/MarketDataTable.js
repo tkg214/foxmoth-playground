@@ -19,6 +19,7 @@ export default class MarketDataTable extends PureComponent {
       getContextMenuItems: this.getContextMenuItems,
       rowHeight: AG_GRID_ROW_HEIGHT,
       headerHeight: AG_GRID_HEADER_HEIGHT,
+      enableImmutableMode: true,
       getRowNodeId: (data) => {
         return data.expiry;
       },
@@ -47,7 +48,7 @@ export default class MarketDataTable extends PureComponent {
 
   updateQuoteValue(extraParams, params) {
     const { colDef, node } = params;
-    const colDefInnerValueKey = `${colDef.field}`;
+    const colDefInnerValueKey = `${colDef.field}_`;
     const colDefInnerValues = _.has(node, `data.${colDefInnerValueKey}`) && node.data[colDefInnerValueKey];
 
     if (params.newValue !== params.oldValue) {
@@ -55,6 +56,7 @@ export default class MarketDataTable extends PureComponent {
         params: _.assign(
           {},
           {
+            key: colDef.field,
             rowIndex: colDefInnerValues.rowIndex,
             columnIndex: colDefInnerValues.columnIndex,
             newValue: Number(params.newValue),
