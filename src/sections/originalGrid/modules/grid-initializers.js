@@ -52,7 +52,7 @@ export const createColumnDefs = (swaptionData, valueGetter, updateQuoteValue, Ag
         rowDataLength: swaptionData.swap_lengths.length,
         market_data_template: swaptionData.market_data_template,
       },
-      cellRenderer: (params) => {
+      valueFormatter: (params) => {
         return _.isNumber(params.value) ? convertToNumeralPercentage(params.value, '(0,0.00 %)') : params.value;
       },
       tooltipField: `customField${index}.quoteValue`,

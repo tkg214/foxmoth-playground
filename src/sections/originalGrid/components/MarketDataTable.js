@@ -2,15 +2,15 @@ import React, { PureComponent } from 'react';
 import _ from 'lodash';
 import GridWrapper from '../../../components/grid/GridWrapper';
 import { createColumnDefs } from '../modules/grid-initializers';
-import AgGridCellEditor from './AgGridCellEditor';
 
-const AG_GRID_ROW_HEIGHT = 20;
-const AG_GRID_HEADER_HEIGHT = 20;
+const AG_GRID_ROW_HEIGHT = 25;
+const AG_GRID_HEADER_HEIGHT = 25;
 
 export default class MarketDataTable extends PureComponent {
   constructor(props) {
     super(props);
     this.gridOptions = {
+      deltaRowDataMode: true,
       enableColResize: false,
       enableRangeSelection: true,
       suppressMovableColumns: true,
@@ -19,6 +19,9 @@ export default class MarketDataTable extends PureComponent {
       getContextMenuItems: this.getContextMenuItems,
       rowHeight: AG_GRID_ROW_HEIGHT,
       headerHeight: AG_GRID_HEADER_HEIGHT,
+      getRowNodeId: (data) => {
+        return data.expiry;
+      },
     };
     this.onGridReady = this.onGridReady.bind(this);
     this.updateQuoteValue = this.updateQuoteValue.bind(this);
@@ -34,7 +37,7 @@ export default class MarketDataTable extends PureComponent {
   }
 
   columnDefs = () => {
-    const columnDefs = createColumnDefs(this.props.swaptionData, this.valueGetter, this.updateQuoteValue, AgGridCellEditor);
+    const columnDefs = createColumnDefs(this.props.swaptionData, this.valueGetter, this.updateQuoteValue);
     return columnDefs;
   }
 
@@ -43,12 +46,17 @@ export default class MarketDataTable extends PureComponent {
   }
 
   updateQuoteValue(extraParams, params) {
+    const { colDef, node } = params;
+    const colDefInnerValueKey = `${colDef.field}`;
+    const colDefInnerValues = _.has(node, `data.${colDefInnerValueKey}`) && node.data[colDefInnerValueKey];
+
     if (params.newValue !== params.oldValue) {
       this.props.updateQuoteValue({
         params: _.assign(
           {},
           {
-            rowIndex: params.node.rowIndex,
+            rowIndex: colDefInnerValues.rowIndex,
+            columnIndex: colDefInnerValues.columnIndex,
             newValue: Number(params.newValue),
             oldValue: params.oldValue,
           },
